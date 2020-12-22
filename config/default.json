@@ -1,0 +1,5 @@
+{
+  "jwtSecret": "secret",
+  "emailHost" : "spentsmartapp@gmail.com",
+  "emailPassword" : "spentsmart123!"
+}
