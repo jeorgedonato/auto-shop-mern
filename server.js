@@ -37,5 +37,5 @@ if (process.env.NODE_ENV === 'production') {
 
 app.listen(PORT, () => {
   console.log(PORT)
-  console.log(`🌎 ==> API server now on port ${PORT}!`);
+  console.log(`🌎 ==> API server now on port ${PORT}${server.graphqlPath}!`);
 });
