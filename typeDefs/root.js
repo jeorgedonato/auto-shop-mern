@@ -1,7 +1,6 @@
-const {gql} = require("apollo-server-express");
+import { gql } from 'apollo-server-express'
 
-
-const root = gql `
+export default gql`
   type Query {
     _: String
   }
