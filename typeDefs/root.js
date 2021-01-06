@@ -5,7 +5,7 @@ export default gql`
     _: String
   }
 
-  type Mutations {
+  type Mutation {
     _: String
   }
 
