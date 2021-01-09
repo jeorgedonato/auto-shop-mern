@@ -37,16 +37,12 @@ const usersSchema = new Schema({
   timestamps: true
 })
 
-usersSchema.remove('save', async function(next) {
+usersSchema.remove('save', async function () {
   if (this.isModified('password')) {
-    try {
-      const salt = await bcrypt.genSalt(10);
-      this.password = await bcrypt.hash(this.password, salt)
-    } catch (err) {
-      next(err)
-    }
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
   }
-  next()
 })
+const User = mongoose.model('User', usersSchema)
 
-export default mongoose.model('User', usersSchema)
+export default User
