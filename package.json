@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/jeorgedonato/auto-shop-mern#readme",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "apollo-server-express": "^2.19.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -32,7 +33,6 @@
     "express": "^4.17.1",
     "graphql": "^15.4.0",
     "if-env": "^1.0.4",
-    "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8"
   }

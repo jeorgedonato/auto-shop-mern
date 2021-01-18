@@ -7,8 +7,10 @@ const usersSchema = new Schema({
   email: {
     type: String,
     trim: true,
-    required: [true, 'Enter your e-mail address'],
-    unique: [true, 'This e-mail address already exists']
+    validate: {
+      validator: email => User.doesntExist({ email }),
+      message: ({ value }) => `Email ${value} has already been taken.`
+    }
   },
   password: {
     type: String,
@@ -37,12 +39,17 @@ const usersSchema = new Schema({
   timestamps: true
 })
 
-usersSchema.remove('save', async function () {
+usersSchema.pre('save', async function () {
   if (this.isModified('password')) {
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
   }
 })
+
+usersSchema.statics.doesntExist = function(options) {
+  return this.where(options).countDocuments() === 0
+}
+
 const User = mongoose.model('User', usersSchema)
 
 export default User
