@@ -2,9 +2,12 @@ import express from 'express'
 import path from 'path'
 import connectDB from './config/db'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import typeDefs from './typeDefs'
+import authMiddleware from './middleware/auth'
 import resolvers from './resolvers'
+import { applyMiddleware } from 'graphql-middleware'
 import { makeExecutableSchema } from 'graphql-tools'
 import { ApolloServer } from 'apollo-server-express'
 const PORT = process.env.PORT || 3002
@@ -15,12 +18,17 @@ connectDB()
 app.disable('x-powered-by')
 app.use(bodyParser.json())
 app.use(cookieParser())
+app.use(cors())
+
+const executableSchema = makeExecutableSchema({ typeDefs, resolvers })
+const schemaWithMiddleWare = applyMiddleware(executableSchema, authMiddleware)
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   playground: true,
-  context: ({ req, res }) => ({ req, res })
+  context: ({ req, res }) => ({ req, res }),
+  schema: schemaWithMiddleWare
 })
 
 server.applyMiddleware({ app })

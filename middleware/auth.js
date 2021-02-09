@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 export default async (req, res, next) => {
   const token = req.cookies.token
-
+  console.log('Im in middleware')
   if (!token) {
     throw new AuthenticationError('No token, authorization denied')
   }

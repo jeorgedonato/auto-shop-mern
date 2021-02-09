@@ -1,15 +1,14 @@
 import mongoose from 'mongoose'
 import { User } from '../models'
-import { UserInputError, AuthenticationError } from 'apollo-server-express'
+import { UserInputError, AuthenticationError, ApolloError } from 'apollo-server-express'
 import { signUp, signIn } from '../schemas'
 import jwt from 'jsonwebtoken'
 import config from 'config'
 
 export default {
   Query: {
-    users: (root, args, { req }, info) => {
+    users: (root, args, { req, res }, info) => {
       // TODO: Auth, projection
-      console.log(req)
       return User.find({})
     },
     user: (root, { id }, context, info) => {
@@ -41,7 +40,6 @@ export default {
         if (!user) {
           throw new AuthenticationError(message)
         }
-
         if (!await user.matchesPassword(password)) {
           throw new AuthenticationError(message)
         }
@@ -51,20 +49,15 @@ export default {
             id: user._id
           }
         }
-
-        jwt.sign(
+        const token = jwt.sign(
           payload,
           config.get('jwtSecret'),
-          { expiresIn: 360000 },
-          (err, token) => {
-            if (err) throw err
-            res.cookie('token', token, { httpOnly: true })
-            res.json({ token })
-            console.log(token)
-          }
+          { expiresIn: 360000 }
         )
 
-        // return user
+        res.cookie('token', token, { httpOnly: true })
+
+        return token
       } catch (err) {
         console.log(err)
         throw new UserInputError(err)
