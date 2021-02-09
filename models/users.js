@@ -50,6 +50,10 @@ usersSchema.statics.doesntExist = function(options) {
   return this.where(options).countDocuments() === 0
 }
 
+usersSchema.methods.matchesPassword = function (password) {
+  return bcrypt.compare(password, this.password)
+}
+
 const User = mongoose.model('User', usersSchema)
 
 export default User
