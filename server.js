@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import typeDefs from './typeDefs'
 import resolvers from './resolvers'
+import { makeExecutableSchema } from 'graphql-tools'
 import { ApolloServer } from 'apollo-server-express'
 const PORT = process.env.PORT || 3002
 const app = express()
@@ -14,10 +15,12 @@ connectDB()
 app.disable('x-powered-by')
 app.use(bodyParser.json())
 app.use(cookieParser())
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  playground: true
+  playground: true,
+  context: ({ req, res }) => ({ req, res })
 })
 
 server.applyMiddleware({ app })
