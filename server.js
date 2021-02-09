@@ -28,10 +28,10 @@ const server = new ApolloServer({
   resolvers,
   playground: true,
   context: ({ req, res }) => ({ req, res }),
-  schema: schemaWithMiddleWare
+  // schema: schemaWithMiddleWare
 })
 
-server.applyMiddleware({ app })
+server.applyMiddleware({ app, cors: false })
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
