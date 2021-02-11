@@ -46,8 +46,8 @@ usersSchema.pre('save', async function () {
   }
 })
 
-usersSchema.statics.doesntExist = function(options) {
-  return this.where(options).countDocuments() === 0
+usersSchema.statics.doesntExist = async function (options) {
+  return await this.where(options).countDocuments() === 0
 }
 
 usersSchema.methods.matchesPassword = function (password) {

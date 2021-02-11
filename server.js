@@ -10,15 +10,19 @@ import resolvers from './resolvers'
 import { applyMiddleware } from 'graphql-middleware'
 import { makeExecutableSchema } from 'graphql-tools'
 import { ApolloServer } from 'apollo-server-express'
-const PORT = process.env.PORT || 3002
+const PORT = process.env.PORT || 3003
 const app = express()
 
 connectDB()
 
 app.disable('x-powered-by')
 app.use(bodyParser.json())
-app.use(cookieParser())
+// const corsOptions = {
+//   // origin: 'http://localhost:3003',
+//   credentials: true
+// }
 app.use(cors())
+app.use(cookieParser())
 
 const executableSchema = makeExecutableSchema({ typeDefs, resolvers })
 const schemaWithMiddleWare = applyMiddleware(executableSchema, authMiddleware)
@@ -28,10 +32,14 @@ const server = new ApolloServer({
   resolvers,
   playground: true,
   context: ({ req, res }) => ({ req, res }),
-  schema: schemaWithMiddleWare
+  // schema: schemaWithMiddleWare
 })
 
-server.applyMiddleware({ app })
+server.applyMiddleware({
+  app,
+  path: '/',
+  cors: false
+})
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

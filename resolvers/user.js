@@ -9,6 +9,7 @@ export default {
   Query: {
     users: (root, args, { req, res }, info) => {
       // TODO: Auth, projection
+      console.log(req.cookies.token)
       return User.find({})
     },
     user: (root, { id }, context, info) => {
