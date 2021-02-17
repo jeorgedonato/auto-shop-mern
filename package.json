@@ -33,8 +33,6 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "graphql": "^15.4.0",
-    "graphql-middleware": "^6.0.3",
-    "graphql-tools": "^7.0.2",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8"

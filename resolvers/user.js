@@ -1,27 +1,30 @@
 import mongoose from 'mongoose'
 import { User } from '../models'
-import { UserInputError, AuthenticationError, ApolloError } from 'apollo-server-express'
+import { UserInputError, AuthenticationError } from 'apollo-server-express'
 import { signUp, signIn } from '../schemas'
 import jwt from 'jsonwebtoken'
 import config from 'config'
+import { signOut } from '../helpers/auth'
 
 export default {
   Query: {
-    users: (root, args, { req, res }, info) => {
+    users: async (root, args, { req, res }, info) => {
       // TODO: Auth, projection
-      console.log(req.cookies.token)
       return User.find({})
     },
-    user: (root, { id }, context, info) => {
+    user: async (root, { id }, { req, res }, info) => {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new UserInputError('ID is not a valid user ID.')
       }
-
-      return User.findById(id)
+      return await User.findById(id)
+    },
+    me: async (root, args, { req, res }, info) => {
+      // const token = req.cookies.token
+      return await User.findById(req.user.id)
     }
   },
   Mutation: {
-    signUp: async (root, args, context, info) => {
+    signUp: async (root, args, { req, res }, info) => {
       try {
         await signUp.validateAsync(args, { abortEarly: false })
 
@@ -63,6 +66,9 @@ export default {
         console.log(err)
         throw new UserInputError(err)
       }
+    },
+    logOut: async (root, args, { req, res }, info) => {
+      return await signOut(req, res)
     }
   }
 }
