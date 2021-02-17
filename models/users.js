@@ -50,8 +50,8 @@ usersSchema.statics.doesntExist = async function (options) {
   return await this.where(options).countDocuments() === 0
 }
 
-usersSchema.methods.matchesPassword = function (password) {
-  return bcrypt.compare(password, this.password)
+usersSchema.methods.matchesPassword = async function (password) {
+  return await bcrypt.compare(password, this.password)
 }
 
 const User = mongoose.model('User', usersSchema)

@@ -1,0 +1,30 @@
+mutation {
+  signUp(
+    email: "donato@gmail.com"
+    password: "123Ss@qwe"
+    firstname: "Jeorge Janil"
+    lastname: "Donato"
+  ),{
+    id
+  }
+}
+
+mutation{
+  signIn(email: "donato@gmail.com", password: "123Ss@qwe")
+}
+
+query{
+  users,{
+    id
+  }
+}
+
+mutation{
+  logOut
+}
+
+query{
+  me,{
+    id
+  }
+}
