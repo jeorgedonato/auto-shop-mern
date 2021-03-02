@@ -18,6 +18,7 @@ export default gql`
     email: String!
     firstname: String!
     lastname: String!
-    createdAt: String!
+    createdAt: String!,
+    user_role: Int!
   }
 `

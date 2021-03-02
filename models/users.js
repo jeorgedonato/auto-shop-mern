@@ -34,6 +34,10 @@ const usersSchema = new Schema({
   profile_picture: {
     type: String
     // get: v => `${root}${v}`
+  },
+  user_role: {
+    type: Number, // 1 for admin, 2 for sellers, 3 for users
+    required: true
   }
 }, {
   timestamps: true
