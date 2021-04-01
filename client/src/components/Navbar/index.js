@@ -11,10 +11,8 @@ const Navbar = () => {
         </button>
         <div className='collapse navbar-collapse ' id='navbarNavAltMarkup'>
           <div className='navbar-nav'>
-            <a className='nav-link active' aria-current='page' href='#'>Home</a>
-            <a className='nav-link' href='#'>Features</a>
-            <a className='nav-link' href='#'>Pricing</a>
-            <a className='nav-link disabled' href='#' tabindex='-1' aria-disabled='true'>Disabled</a>
+            <a className='nav-link' href='#'><i class='fas fa-user' /></a>
+            <a className='nav-link active' aria-current='page' href='#'><i class='fas fa-shopping-cart' /></a>
           </div>
         </div>
       </div>

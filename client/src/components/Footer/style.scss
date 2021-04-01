@@ -1,4 +1,4 @@
-@import '../../main.scss';
+@import '../../base.scss';
 
 footer {
   min-height: 4rem;
@@ -13,4 +13,10 @@ footer {
   color: white;
   margin-top: 30px;
   border-top: .5rem solid $secondary-color;
+  font-family: $primary-font;
+}
+
+#footer-div{
+  justify-content: center;
+  text-align: center;
 }
